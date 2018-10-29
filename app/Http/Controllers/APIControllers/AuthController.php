@@ -89,7 +89,7 @@ class AuthController extends Controller
         //return response(['Invalid Credentials']);
         return response([
             'success' => false, 
-            'message' => "Log Failed!", 
+            'message' => "Log Failed!!", 
             'status_code' => 400
         ]);
     }
@@ -109,44 +109,6 @@ class AuthController extends Controller
         return $token;
     }
 
-    // public function forgotPassword(Request $request)
-    // {
-    //   $rules = [
-    //     'email' => 'required|email',
-    //   ];
-  
-    //   $validator = \Validator::make($request->only('email'), $rules);
-    //   if ($validator->fails()) {
-    //     return RespondHelper::respondValidationError($validator);
-    //   }
-  
-    //   $email = $request->input('email');
-    //   $front_url = $request->input('front_url');
-  
-    //   $user = User::where('email', $email)->first();
-  
-    //   if (isset($user)) {
-    //     $trim = md5($user->password);
-  
-    //     $reset_link = $front_url . '/account/password/reset/' . base64_encode($email) . '_fi35_' . $trim;
-    //     $data = array(
-    //       'username' => $user->username,
-    //       'email' => $email,
-    //       'reset_link' => $reset_link
-    //     );
-  
-    //     \Session::flash('email', $email);
-  
-    //     return
-    //       Mail::send('emails.resetPassword', $data, function ($message) {
-    //         $message->to(session('email'))->subject('Reset password');
-    //       })
-    //         ? $this->respond_helper->respondSuccess('Succeed in sending Email.')
-    //         : $this->respond_helper->respondError('Failed to send.');
-    //   } else {
-    //     return json()->badRequestError('The email address is not exist in database.');
-    //   }
-    // }
     public function passwordResetEmail(Request $request) {
         $fields = ['email', 'url'];
         // grab credentials from the request
@@ -248,67 +210,5 @@ class AuthController extends Controller
         'status_code' => 400
       ]);
     }
-//     public function resetPassword(Request $request) { 
-//         $fields = ['password', 'token'];
-//         // grab credentials from the request
-//         $credentials = $request->only($fields);
-//         foreach($fields as $field) {
-//             $credentials[$field] = trim($credentials[$field]);
-//         }
-
-//         $validator = Validator::make(
-//             $credentials,
-//             [
-//                 'password' => 'required|min:6',
-//                 'token' => 'required'
-//             ]
-//             );
-//         if ($validator->fails())
-//         {
-//             return response([
-//                 'success' => false, 
-//                 'message' => $validator->messages(), 
-//                 'status_code' => 400 
-//             ]);
-//         }
-
-//         $token = $credentials['token'];
-//         $pr = PasswordResets::where('token', $token)->first(['email', 'created_at']);
-//         $email = $pr['email'];
-//         if(!$email) {
-//             return response([
-//                 'success' => false, 
-//                 'message' => 'Invalid reset password link!', 
-//                 'status_code' => 404 
-//             ]);
-//         }
-
-//         $dateCreated = strtotime($pr['created_at']);
-//         $expireInterval = 86400; // token expire interval in seconds (24 h)
-//         $currentTime = time();
-
-//         if($currentTime  - $dateCreated > $expireInterval) {
-//             return response([
-//                 'success' => false, 
-//                 'message' => 'The time to reset password has expired!', 
-//                 'status_code' => 400 
-//             ]);
-//         }
-
-//         $password = bcrypt($credentials['password']);
-//         $updatedRows = User::where('email', $email)->update(['password' => $password]);
-//         if($updatedRows > 0) {
-//             PasswordResets::where('token', $token)->delete();
-//             return response([
-//                 'success' => true, 
-//                 'message' => 'The password has been changed successfully!', 
-//                 'status_code' => 200 
-//             ]);
-//         }
-//         return response([
-//                 'success' => false, 
-//                 'message' => $error, 
-//                 'status_code' => 500 
-//         ]);
-//     }
+    
  }
