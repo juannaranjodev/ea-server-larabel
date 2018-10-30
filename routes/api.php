@@ -23,5 +23,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 });
 
 Route::apiResource('products', 'APIControllers\ProductController');
+Route::apiResource('users', 'APIControllers\UserController');
 Route::apiResource('ea_products', 'APIControllers\EaProductController');
 Route::apiResource('licenses', 'APIControllers\LicenseController');
+//Route::get('api/licenses/getbyeaid', 'APIControllers\LicenseController@getByEaId');

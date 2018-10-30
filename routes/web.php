@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/licenses/getbyeaid/{ea_id}', 'APIControllers\LicenseController@getByEaId');
+
+
