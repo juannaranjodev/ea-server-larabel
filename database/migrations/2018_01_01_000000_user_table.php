@@ -17,6 +17,8 @@ class UserTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->enum('role',['admin', 'member'])->default('member');
+            $table->boolean('is_allowed')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -28,9 +30,11 @@ class UserTable extends Migration
         // insert admin
         DB::table('users')->insert(
             array(
-                'email' => 'admin@rm.com',
+                'email' => 'schuttendennis@gmail.com',
                 'name' => 'admin',
                 'password' => bcrypt('123456'),//password
+                'role' => 'admin',
+                'is_allowed' => true,
             )
         );
     }

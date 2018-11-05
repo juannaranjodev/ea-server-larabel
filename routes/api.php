@@ -20,10 +20,12 @@ Route::middleware('api')->post('/send-sms/{toPhoneNumber}' , 'APIControllers\Sms
 
 Route::group(['middleware' => ['auth:api']], function () {
     //Route::any('/your_route', 'APIControllers\YourController@index');
+    Route::apiResource('products', 'APIControllers\ProductController');
+    Route::apiResource('users', 'APIControllers\UserController');
+    Route::apiResource('ea_products', 'APIControllers\EaProductController');
+    Route::apiResource('licenses', 'APIControllers\LicenseController');
+    
 });
 
-Route::apiResource('products', 'APIControllers\ProductController');
-Route::apiResource('users', 'APIControllers\UserController');
-Route::apiResource('ea_products', 'APIControllers\EaProductController');
-Route::apiResource('licenses', 'APIControllers\LicenseController');
+
 //Route::get('api/licenses/getbyeaid', 'APIControllers\LicenseController@getByEaId');

@@ -38,11 +38,22 @@ class LicenseController extends Controller
      */
     public function store(LicenseRequest $request)
     {
+        $hash_key = md5($request->ea_id."_".$request->account_number);
+        
+        $before = License::where(['ea_id'=> $request->ea_id, 'user_id'=> $request->user_id])->count();
+        if(!$request->is_admin && $before>=3) {
+            return response([
+                'success' => false, 
+                'message' => "License count can not excceed 3.", 
+                'status_code' => 400
+              ]);
+        }
+
         $license = License::create([
             'ea_id' => $request->ea_id,
             'account_number' => $request->account_number,
             'user_id' => $request->user_id,
-            'hash_key' => $request->hash_key,
+            'hash_key' => $hash_key,
             'allow_flag' => $request->allow_flag,
         ]);
 
@@ -81,11 +92,12 @@ class LicenseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $hash_key = md5($request->ea_id."_".$request->account_number);
         $license = License::findOrFail($id);
         $license->ea_id = $request->ea_id;
         $license->account_number = $request->account_number;
         $license->user_id = $request->user_id;
-        $license->hash_key = $request->hash_key;
+        $license->hash_key = $hash_key;
         $license->allow_flag = $request->allow_flag;
         $license->save();
 

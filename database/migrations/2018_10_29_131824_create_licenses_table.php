@@ -19,7 +19,7 @@ class CreateLicensesTable extends Migration
             $table->integer('user_id');
             $table->string('account_number');
             $table->string('hash_key');
-            $table->boolean('allow_flag');
+            $table->boolean('allow_flag')->default(true);
             $table->timestamps();
         });
     }

@@ -26,8 +26,9 @@ class LicenseRequest extends FormRequest
         return [
             'ea_id' => 'required|max:255',
             'account_number' => 'required|max:255',
-            'hash_key' => 'required|max:255',
+            //'hash_key' => 'required|max:255',
             'user_id' => 'required',
+            'is_admin' => 'required'
         ];
     }
 }

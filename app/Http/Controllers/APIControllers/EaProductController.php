@@ -104,4 +104,10 @@ class EaProductController extends Controller
         $ea_product = EaProduct::findOrFail($id);
         $ea_product->delete();
     }
+
+    public function getByUserId($user_id) {
+        $ea_products = EaProduct::where('user_id', $user_id)
+        ->get();
+        return EaProductResource::collection($ea_products);
+    }
 }

@@ -83,13 +83,25 @@ class AuthController extends Controller
         if (auth()->attempt($credentials)) {
             $result['token'] = auth()->issue();
             $result['email'] = $credentials['email'];
+            $user = User::where('email', '=' , $credentials['email'])->first();
+            // ruby test <
+            if(!$user->is_allowed) {
+                return response([
+                    'success' => false, 
+                    'message' => "The user is not allowed yet!", 
+                    'status_code' => 400
+                ]);
+            }
+            // ruby test >
+            $result['role'] = $user->role;
+            $result['id'] = $user->id;
            return response($result);
         }
         //ruby test:
         //return response(['Invalid Credentials']);
         return response([
             'success' => false, 
-            'message' => "Log Failed!!", 
+            'message' => 'Invalid credentials!', 
             'status_code' => 400
         ]);
     }

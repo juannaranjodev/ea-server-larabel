@@ -22,7 +22,7 @@ class LicenseResource extends JsonResource
             'email' => $email,
             'user_id' => $this->user_id,
             'account_number' => $this->account_number,
-            'hash_key' => $this->hash_key,
+            //'hash_key' => $this->hash_key,
             'allow_flag' => $this->allow_flag,
             'created_at' => (string)$this->created_at,
             'updated_at' => (string)$this->updated_at,
