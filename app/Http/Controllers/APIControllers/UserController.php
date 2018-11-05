@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\APIControllers;
 
 use App\User;
+use App\Models\EaProduct;
+use App\Models\License;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
@@ -91,5 +93,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+        License::where('user_id', $id)->delete();
+        EaProduct::where('user_id', $id)->delete();
     }
 }
