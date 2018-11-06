@@ -41,6 +41,14 @@ class EaProductController extends Controller
      */
     public function store(EaProductRequest $request)
     {
+        $ea_already_product = EaProduct::where(['ea_id'=> $request->ea_id, 'user_id' => $request->user_id])->first();
+        if($ea_already_product) {
+            return response([
+                'success' => false, 
+                'message' => "EA already exists!", 
+                'status_code' => 400
+            ]);
+        }
         $ea_product = EaProduct::create([
             'ea_id' => $request->ea_id,
             'ea_name' => $request->ea_name,

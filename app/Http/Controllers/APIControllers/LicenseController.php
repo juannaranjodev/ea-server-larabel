@@ -116,8 +116,8 @@ class LicenseController extends Controller
         $license->delete();
     }
 
-    public function getByEaId($ea_id) {
-        $licenses = License::where('ea_id', $ea_id)
+    public function getByEaId($ea_id, $user_id) {
+        $licenses = License::where(['ea_id'=> $ea_id, 'user_id' => $user_id])
             ->get();
         return LicenseResource::collection($licenses);
     }
