@@ -114,6 +114,9 @@ class LicenseController extends Controller
     {
         $license = License::findOrFail($id);
         $license->delete();
+        return response([
+            'success' => "successfully deleted"
+        ]);
     }
 
     public function getByEaId($ea_id, $user_id) {

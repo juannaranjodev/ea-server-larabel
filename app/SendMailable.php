@@ -33,6 +33,6 @@ class SendMailable extends Mailable
      */
     public function build()
     {
-        return $this->subject('Password Reset')->view('Mail');
+        return $this->subject('Password Reset')->view('mail');
     }
 }

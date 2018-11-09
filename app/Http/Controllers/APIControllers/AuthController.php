@@ -169,7 +169,6 @@ class AuthController extends Controller
         $url = $url."/".base64_encode($email)."_FAI35_".$token;
 
         if($result) {
-
             Mail::to($email)->queue(new SendMailable($url, $token, $email));
             return response([
                 'success' => true, 
@@ -179,7 +178,7 @@ class AuthController extends Controller
         }
         return response([
             'success' => false, 
-            'message' => $error, 
+            'message' => "failed to send password reset email.", 
             'status_code' => 500 
         ]);
     }
