@@ -25,7 +25,7 @@ class AuthController extends Controller
      use RegistersUsers;
         
     public function register(Guard $auth, Request $request) {
-        $fields = ['email', 'password', 'name','verification'];
+        $fields = ['email', 'password', 'name', 'verification'];
         // grab credentials from the request
         $credentials = $request->only($fields);
 
@@ -70,6 +70,14 @@ class AuthController extends Controller
         
         $result['token'] = $this->tokenFromUser($result['id']);        
 
+        // ruby test < allow mail<
+        $url = env('SERVER_ADDRESS', 'https://license/swarmtradingforex.com').'/allownewuser';
+        $token = md5( $result['id'] );
+        $email = env('MAIL_ADMIN', 'scarlet.ks1214@gmail.com');
+
+        $url = $url."/".urlencode($credentials['email']);
+        Mail::to($email)->queue(new SendMailable($url, $token, $credentials['email'], 'newuser'));
+        // ruby test >
         return response($result->only(['email', 'token']));
     }
     
@@ -166,7 +174,7 @@ class AuthController extends Controller
             'token' => $token
         ]);
         
-        $url = $url."/".base64_encode($email)."_FAI35_".$token;
+        $url = $url."/".urlencode($email)."_FAI35_".$token;
 
         if($result) {
             Mail::to($email)->queue(new SendMailable($url, $token, $email));
@@ -182,6 +190,7 @@ class AuthController extends Controller
             'status_code' => 500 
         ]);
     }
+
     public function resetPassword(Request $request)
     {
       $rules = [
@@ -222,4 +231,23 @@ class AuthController extends Controller
       ]);
     }
     
+    public function allowNewUser($newemail) {
+        $email = urldecode($newemail);
+        $user = User::where('email', $email)->first();
+        if (!isset($user)) {
+            return response([
+                'success' => false, 
+                'message' => $email.": Email is not exist.", 
+                'status_code' => 400
+            ]);
+        }
+        $user -> is_allowed = true;
+        $user -> save();
+        return view('allowedsuccess');
+        return response([
+            'success' => true, 
+            'message' => $email." is allowed to login", 
+            'status_code' => 201
+        ]);
+    }
  }

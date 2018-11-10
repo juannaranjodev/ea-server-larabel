@@ -17,5 +17,4 @@ Route::get('/', function () {
 
 Route::get('/licenses/getbyeaid/{ea_id}/{user_id}', 'APIControllers\LicenseController@getByEaId');
 Route::get('/ea_products/myea_products/{user_id}', 'APIControllers\EaProductController@getByUserId');
-
-
+Route::get('/allownewuser/{newemail}', 'APIControllers\AuthController@allowNewUser');

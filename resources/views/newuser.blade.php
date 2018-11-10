@@ -5,7 +5,7 @@
 	<a href="http://localhost:8080/session/reset-password">Click Here ruby test</a> 
 </p> -->
 <body>
-<h1>Hello {{$email}}.</h1>
+<h1>New User Email: {{$email}}.</h1>
 <br>
-Please visit {{$url}}
+To allow this user click this link: {{$url}}
 </body>

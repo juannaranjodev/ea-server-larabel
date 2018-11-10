@@ -13,18 +13,23 @@ class SendMailable extends Mailable
     public $link;
     public $url;
     public $email;
-
+    public $template;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($url, $token, $email)
+    public function __construct($url, $token, $email, $template = null)
     {
+        if (null === $template) {
+            $template = "mail";
+        }
         $this->link = urldecode($url).'/'.$token;
         $this->url = $url;
         $this->email = $email;
+        $this->template = $template;
     }
+
 
     /**
      * Build the message.
@@ -33,6 +38,6 @@ class SendMailable extends Mailable
      */
     public function build()
     {
-        return $this->subject('Password Reset')->view('mail');
+        return $this->subject('Swarm Trading')->view($this->template);
     }
 }
